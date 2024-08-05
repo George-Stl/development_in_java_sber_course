@@ -1,6 +1,7 @@
 package Episode4;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class DeathStarWeakness {
     public static void main(String[] args) {
@@ -15,19 +16,18 @@ public class DeathStarWeakness {
         }
     }
     public static ArrayList<String> Arraylist(ArrayList<String> strings) {
-        int j = strings.size();
-        for(int i = 0; i < j; i++){
-            if(strings.get(i).contains("d") && strings.get(i).contains("j")){
-                continue;
-            } else if(strings.get(i).contains("d")){
-                strings.remove(i);
-                i--;
-                continue;
-            } else if(strings.get(i).contains("s")){
-                strings.add(strings.get(i));
-                continue;
+        ArrayList<String> toAdd = new ArrayList<>();
+
+        for(Iterator<String> iterator = strings.iterator(); iterator.hasNext();){
+            String str = iterator.next();
+            if(str.contains("d") && !str.contains("j")){
+                iterator.remove();
+
+            } else if(str.contains("s")){
+                toAdd.add(str);
             }
         }
+        strings.addAll(toAdd);
 
         return strings;
     }
