@@ -3,127 +3,131 @@ package Episode5;
 import java.util.*;
 
 public class Chase {
-    public static List getListForGet() {
-
-        long arrTime = getTimeGet(new ArrayList<>());
-        long linkTime = getTimeGet(new LinkedList<>());
-        if(arrTime < linkTime){
+    public static List getListForGet(int size) {
+        long arrTime = getTimeGet(new ArrayList<>(), size);
+        long linkTime = getTimeGet(new LinkedList<>(), size);
+        if (arrTime < linkTime) {
             return new ArrayList<>();
-        } else if(linkTime < arrTime){
-            return new LinkedList<>();
-        } else return null;
-
-    }
-    public static long getTimeGet(List list){
-        for(int i = 0; i < 100000; i ++){
-            list.add(i);
-        }
-        Date startTime = new Date();
-        Random random = new Random();
-        for(int i = 0; i < 100000; i++){
-            list.get(random.nextInt(0, 100000));
-        }
-        Date endTime = new Date();
-        return endTime.getTime() - startTime.getTime();
-    }
-    public static List getListForSet() {
-        if(getTimeSet(new ArrayList<>()) < getTimeSet(new LinkedList<>())){
-            return new ArrayList<>();
-        }else if (getTimeSet(new ArrayList<>()) > getTimeSet(new LinkedList<>())){
+        } else if (linkTime < arrTime) {
             return new LinkedList<>();
         } else return null;
     }
-    public static long getTimeSet(List list){
 
-        for(int i = 0; i < 10000; i ++){
+    public static long getTimeGet(List list, int size) {
+        for (int i = 0; i < size; i++) {
+            list.add(i);
+        }
+        long startTime = System.nanoTime();
+        Random random = new Random();
+        for (int i = 0; i < size; i++) {
+            list.get(random.nextInt(size));
+        }
+        long endTime = System.nanoTime();
+        return endTime - startTime;
+    }
+
+    public static List getListForSet(int size) {
+        if (getTimeSet(new ArrayList<>(), size) < getTimeSet(new LinkedList<>(), size)) {
+            return new ArrayList<>();
+        } else if (getTimeSet(new ArrayList<>(), size) > getTimeSet(new LinkedList<>(), size)) {
+            return new LinkedList<>();
+        } else return null;
+    }
+
+    public static long getTimeSet(List list, int size) {
+        for (int i = 0; i < size; i++) {
             list.add(i);
         }
         Random random = new Random();
-        Date start = new Date();
-        for(int i = 0; i < 10000; i ++){
-            list.set(random.nextInt(0, 10000), i);
+        long startTime = System.nanoTime();
+        for (int i = size; i > 0; i--) {
+            list.set(random.nextInt(size), i);
         }
-        Date end = new Date();
-        return end.getTime() - start.getTime();
+        long endTime = System.nanoTime();
+        return endTime - startTime;
     }
-    public static List getListForAddOrInsert() {
-        if((getTimeAdd(new ArrayList<>()) < getTimeAdd(new LinkedList<>())) && (
-                getTimeInsert(new ArrayList<>()) < getTimeInsert(new LinkedList<>()))){
+
+    public static List getListForAddOrInsert(int size) {
+        if ((getTimeAdd(new ArrayList<>(), size) < getTimeAdd(new LinkedList<>(), size)) && (
+                getTimeInsert(new ArrayList<>(), size) < getTimeInsert(new LinkedList<>(), size))) {
             return new ArrayList<>();
-        }else if ((getTimeAdd(new ArrayList<>()) > getTimeAdd(new LinkedList<>())) && (
-                getTimeInsert(new ArrayList<>()) > getTimeInsert(new LinkedList<>()))){
+        } else if ((getTimeAdd(new ArrayList<>(), size) > getTimeAdd(new LinkedList<>(), size)) && (
+                getTimeInsert(new ArrayList<>(), size) > getTimeInsert(new LinkedList<>(), size))) {
             return new LinkedList<>();
-        } else{
+        } else {
             return null;
         }
     }
-    public static long getTimeAdd(List list){
-        Date start = new Date();
-        for(int i = 0; i < 100000; i++){
+
+    public static long getTimeAdd(List list, int size) {
+        long startTime = System.nanoTime();
+        for (int i = 0; i < size; i++) {
             list.add(i);
         }
-        Date end = new Date();
-        return end.getTime() - start.getTime();
+        long endTime = System.nanoTime();
+        return endTime - startTime;
     }
-    public static long getTimeInsert(List list){
-        for(int i = 0; i < 10000; i++){
+
+    public static long getTimeInsert(List list, int size) {
+        for (int i = 0; i < size; i++) {
             list.add(i);
         }
-        Date start = new Date();
         Random random = new Random();
-        for(int i = 0; i < 1000; i++){
-            list.add(random.nextInt(0, 10000), i);
+        long startTime = System.nanoTime();
+        for (int i = 0; i < size; i++) {
+            list.add(random.nextInt(size), i);
         }
-        Date end = new Date();
-        return end.getTime() - start.getTime();
+        long endTime = System.nanoTime();
+        return endTime - startTime;
     }
-    public static List getListForRemove() {
-        if(getTimeRemove(new ArrayList<>()) < getTimeRemove(new LinkedList<>())){
+
+    public static List getListForRemove(int size) {
+        if (getTimeRemove(new ArrayList<>(), size) < getTimeRemove(new LinkedList<>(), size)) {
             return new ArrayList<>();
-        }else if (getTimeRemove(new ArrayList<>()) > getTimeRemove(new LinkedList<>())){
+        } else if (getTimeRemove(new ArrayList<>(), size) > getTimeRemove(new LinkedList<>(), size)) {
             return new LinkedList<>();
         } else return null;
-
     }
-    public static long getTimeRemove(List list){
-        for(int i = 0; i < 100000; i ++){
+
+    public static long getTimeRemove(List list, int size) {
+        for (int i = 0; i < size; i++) {
             list.add(i);
         }
         Random random = new Random();
-        Date start = new Date();
-        for(int i = 0; i < 10000; i++){
-            list.remove(random.nextInt(0, 90000));
+        long startTime = System.nanoTime();
+        for (int i = 0; i < size / 10; i++) {
+            list.remove(random.nextInt(size - size/10));
         }
-        Date end = new Date();
-        return end.getTime() - start.getTime();
+        long endTime = System.nanoTime();
+        return endTime - startTime;
     }
     public static void main(String[] args) {
-
+        int size = 10_000;
         System.out.print("For get best is: ");
-        if(getListForGet() instanceof ArrayList){
+        if(Chase.getListForGet(size) instanceof ArrayList){
             System.out.println("ArrayList");
-        } else if(getListForAddOrInsert() instanceof LinkedList){
+        } else if(Chase.getListForGet(size) instanceof LinkedList){
             System.out.println("LinkedList");
         }
 
         System.out.print("For set best is: ");
-        if(getListForSet() instanceof ArrayList){
+        if(Chase.getListForSet(size) instanceof ArrayList){
             System.out.println("ArrayList");
-        } else if(getListForAddOrInsert() instanceof LinkedList){
+        } else if(Chase.getListForSet(size) instanceof LinkedList){
             System.out.println("LinkedList");
         }
 
         System.out.print("For remove best is: ");
-        if(getListForRemove() instanceof ArrayList){
+        if(Chase.getListForRemove(size) instanceof ArrayList){
             System.out.println("ArrayList");
-        } else if(getListForAddOrInsert() instanceof LinkedList){
+        } else if(Chase.getListForRemove(size) instanceof LinkedList){
             System.out.println("LinkedList");
         }
 
         System.out.print("For add or insert best is: ");
-        if(getListForAddOrInsert() instanceof ArrayList){
+        if(Chase.getListForAddOrInsert(size) instanceof ArrayList){
             System.out.println("ArrayList");
-        } else if (getListForAddOrInsert() instanceof LinkedList){
+        } else if (Chase.getListForAddOrInsert(size) instanceof LinkedList){
             System.out.println("LinkedList");
         }
 
